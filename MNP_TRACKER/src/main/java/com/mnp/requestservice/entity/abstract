@@ -1,1 +1,22 @@
 Capture and validate portability requests 1)Microservice: PortabilityRequestService Controllers: 1. PortabilityRequestController POST/requests → Capture new portability request GET /requests/{id} → View request details 2. ValidationController POST /requests/validate → Validate subscriber data against rules Services: 1. PortabilityRequestManager Create request entry in DB Generate unique request reference ID 2. ValidationService Check if MSISDN exists in DB Validate IMSI format Check ID type & number format 3. Provider LookupService Identify current & target provider IDs Models/Entities: PortabilityRequest Subscriber Provider
+
+[React Dashboard]
+      |
+      | REST API call |
+
+      |
+      v
+[Spring Boot Backend]
+  1. Capture & Validate Request
+  2. Save to PostgreSQL (mnp_request)
+  3. Write Audit Log (audit_log)
+  4. Trigger Inter-Provider REST call
+      | success/fail |
+ |
+ v
+  5. Update Status + Audit
+  6. Push update via WebSocket
+  |
+  v
+[React Dashboard updates instantly]
+
